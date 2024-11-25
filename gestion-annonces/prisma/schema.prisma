@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+ model Employees{
+  id_employee   Int     @id @default(autoincrement())
+  name          String
+  firstname     String
+  pseudo        String
+  password      String
+  role          String   
+  announcements    Announcements[] 
+  research      Research[] 
+ }
+
+  model Announcements{
+  id_announcement   Int    @id @default(autoincrement())
+  title         String
+  description   String     @db.Text
+  type          String
+  address       String
+  price         Float
+  employeeId    Int       
+  employee      Employees   @relation(fields: [employeeId], references: [id_employee])
+  services      Services[] 
+  state         String     @default("active")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+ }
+
+  model Services{
+  id_service    Int    @id @default(autoincrement())
+  service_name  String
+  service_type  String
+  distance      Float
+  announcementId   Int       
+  announcements     Announcements   @relation(fields: [announcementId], references: [id_announcement])
+ }
+
+  model Research{
+  id_research   Int    @id @default(autoincrement())
+  type          String
+  budget        Float
+  location      String
+  employeeId   Int       
+  employee     Employees   @relation(fields: [employeeId], references: [id_employee])
+ }

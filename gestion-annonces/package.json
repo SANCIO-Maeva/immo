@@ -1,0 +1,25 @@
+{
+  "name": "gestion-annonces",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http-errors": "^2.0.0",
+    "nodemon": "^3.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "prisma": "^5.6.0"
+  }
+}
