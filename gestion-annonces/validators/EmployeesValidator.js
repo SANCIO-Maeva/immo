@@ -17,9 +17,9 @@ const EmployeeValidator = z.object({
       /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
       "Le mot de passe doit inclure au moins une majuscule, un chiffre et un caractère spécial"
     ),
-  role: z.enum(["Admin", "Agent", "Manager"], {
+  role: z.enum(["Admin", "Agent"], {
     errorMap: () => ({
-      message: "Le rôle doit être Admin, Agent ou Manager",
+      message: "Le rôle doit être Admin ou Agent",
     }),
   }),
 });
