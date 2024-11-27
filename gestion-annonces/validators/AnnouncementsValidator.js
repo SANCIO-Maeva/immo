@@ -6,7 +6,6 @@ const AnnouncementsValidator = z.object({
     type: z.string().min(1, "Le type est requis."),
     address: z.string().min(1, "L'adresse est requise."),
     price: z.number().positive("Le prix doit être positif."),
-    employeeId: z.number().positive("L'ID de l'employé est requis."),
   });
 
 export default AnnouncementsValidator;

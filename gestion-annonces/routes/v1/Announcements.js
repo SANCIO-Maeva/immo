@@ -18,7 +18,7 @@ const validateAnnouncement = (req, res, next) => {
   
   // Créer une annonce
   router.post("/", validateAnnouncement, async (req, res) => {
-    const { title, description, type, address, price, employeeId } = req.body;
+    const { title, description, type, address, price } = req.body;
     try {
       const newAnnouncement = await prisma.announcements.create({
         data: {
@@ -27,7 +27,6 @@ const validateAnnouncement = (req, res, next) => {
           type,
           address,
           price,
-          employeeId,
         },
       });
       res.status(201).json(newAnnouncement);
@@ -66,11 +65,11 @@ const validateAnnouncement = (req, res, next) => {
   // Mettre à jour une annonce
   router.put("/:id", validateAnnouncement, async (req, res) => {
     const { id } = req.params;
-    const { title, description, type, address, price, employeeId } = req.body;
+    const { title, description, type, address, price } = req.body;
     try {
       const updatedAnnouncement = await prisma.announcements.update({
         where: { id_announcement: parseInt(id) },
-        data: { title, description, type, address, price, employeeId },
+        data: { title, description, type, address, price},
       });
       res.status(200).json(updatedAnnouncement);
     } catch (error) {
