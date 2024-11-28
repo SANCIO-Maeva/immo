@@ -305,6 +305,8 @@ hr {
 
 <script setup>
 import { reactive, ref } from "vue";
+import { useRouter } from 'vue-router';
+
 
 const currentStep = ref(1);
 
