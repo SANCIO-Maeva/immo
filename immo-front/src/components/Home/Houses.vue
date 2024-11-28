@@ -141,7 +141,7 @@ onMounted(() => {
         >
           <!-- House 1 -->
           <div class="col" style="margin-" v-for="announcement in announcements" :key="announcement.id">
-            <div class= "card border-1" style="width: 23rem">
+            <div class= "card border-1" >
               <img src="@/assets/house-1.png" class="card-img-top" alt="@." />
               <div class="card-body">
                 <div class="first-part-card">
