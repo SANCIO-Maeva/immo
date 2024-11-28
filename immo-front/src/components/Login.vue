@@ -1,3 +1,55 @@
+<script setup>
+import { ref } from "vue";
+import axios from "axios";
+
+
+// Données du formulaire
+const form = ref({
+  pseudo: "",
+  password: "",
+});
+
+// Message d'erreur à afficher
+const errorMessage = ref(null);
+
+const submitForm = async () => {
+  try {
+
+    const response = await axios.post("http://localhost:3000/v1/auth/login", form.value);
+
+
+
+    alert("Connexion réussie !");
+    console.log(response.data);
+
+
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+
+  
+
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    if (error.response) {
+
+      console.error('Réponse du serveur :', error.response.data);
+      errorMessage.value = `Erreur : ${error.response.data.message || "Une erreur est survenue"}`;
+    } else if (error.request) {
+
+      console.error('Aucune réponse du serveur:', error.request);
+      errorMessage.value = "Impossible de se connecter au serveur. Veuillez réessayer plus tard.";
+    } else {
+
+      console.error('Erreur lors de la demande:', error.message);
+      errorMessage.value = "Une erreur inconnue est survenue.";
+    }
+  }
+};
+</script>
+
 <template>
   <!-- Nav bar au-dessus de l'image -->
   <nav class="navbar navbar-expand-lg navbar-transparent">
@@ -50,44 +102,35 @@
       <div class="form-content">
         <p>Heureux de vous revoir !</p>
         <div class="fields">
-          <!-- ID -->
           <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label"
-              >Identifiant</label
-            >
+            <label for="pseudo" class="form-label">Pseudo</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="exampleFormControlInput1"
+              id="pseudo"
+              v-model="form.pseudo"
             />
           </div>
-          <!-- Password -->
-          <label for="inputPassword5" class="form-label">Mot de passe</label>
-          <input
-            type="password"
-            id="inputPassword5"
-            class="form-control"
-            aria-describedby="passwordHelpBlock"
-          />
+          <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              v-model="form.password"
+            />
+          </div>
         </div>
 
-        <!-- Conditions password -->
-        <!-- <div id="passwordHelpBlock" class="form-text">
-          Your password must be 8-20 characters long, contain letters and
-          numbers, and must not contain spaces, special characters, or emoji.
-        </div> -->
+        <!-- Bouton de connexion -->
+        <button class="mt-5" @click="submitForm">Se connecter</button>
 
-        <div class="mt-3 text-end">Mot de passe oublié ?</div>
-
-        <!-- Button -->
-        <button class="mt-5">Se connecter</button>
-        <hr class="mt-5" />
+        <!-- Affichage des erreurs -->
+        <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
       </div>
     </div>
   </div>
 </template>
-
-<script></script>
 
 <style scoped>
 /* Structure du container */

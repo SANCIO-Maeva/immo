@@ -314,7 +314,6 @@ const form = reactive({
   type: "",
   address: "",
   price: "",
-  status: "",
   creationDate: "",
   updateDate: "",
 });
