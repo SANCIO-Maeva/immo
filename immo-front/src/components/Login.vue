@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-
+// **Importation de useRouter pour la gestion des routes**
+import { useRouter } from "vue-router"; 
 
 // Données du formulaire
 const form = ref({
@@ -12,43 +13,41 @@ const form = ref({
 // Message d'erreur à afficher
 const errorMessage = ref(null);
 
+// **Accès au router**
+const router = useRouter();  // Accès au router pour rediriger après la connexion
+
 const submitForm = async () => {
   try {
 
     const response = await axios.post("http://localhost:3000/v1/auth/login", form.value);
 
-
-
-    alert("Connexion réussie !");
+    // alert("Connexion réussie !");
     console.log(response.data);
 
-
+    // Stockage de l'utilisateur dans le localStorage
     localStorage.setItem("user", JSON.stringify(response.data.user));
 
-  
-
-
+    // **Redirection vers la page d'accueil après la connexion réussie**
+    router.push({ name: 'home' });  // **Redirection via router.push()** (remplacer 'home' par le nom de ta route d'accueil)
 
   } catch (error) {
 
     console.error(error);
 
     if (error.response) {
-
       console.error('Réponse du serveur :', error.response.data);
       errorMessage.value = `Erreur : ${error.response.data.message || "Une erreur est survenue"}`;
     } else if (error.request) {
-
       console.error('Aucune réponse du serveur:', error.request);
       errorMessage.value = "Impossible de se connecter au serveur. Veuillez réessayer plus tard.";
     } else {
-
       console.error('Erreur lors de la demande:', error.message);
       errorMessage.value = "Une erreur inconnue est survenue.";
     }
   }
 };
 </script>
+
 
 <template>
   <!-- Nav bar au-dessus de l'image -->

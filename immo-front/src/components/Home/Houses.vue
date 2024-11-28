@@ -1,3 +1,34 @@
+
+<script setup>
+import { BedDouble } from "lucide-vue-next";
+import { Bath } from "lucide-vue-next";
+import { Diamond } from "lucide-vue-next";
+import { Heart } from "lucide-vue-next";
+
+import { onMounted, ref } from "vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const announcements = ref([]);
+let AnnoncesId = null;
+
+
+const fetchAnnonces = async () => {
+    const response = await fetch("http://localhost:3000/v1/announcements");
+    const data = await response.json();
+    announcements.value = data;
+    AnnoncesId = data.id;
+};
+
+const redirection = async (AnnoncesId) => {
+    router.push({ name: 'about', params: { id: AnnoncesId } });
+}
+
+onMounted(() => {
+  fetchAnnonces();
+});
+
+</script>
 <template>
   <main style="background-color: #f5f5f5">
     <section class="container mt-5 mx-auto bg-custom">
@@ -109,300 +140,20 @@
           class="row row-cols-1 row-cols-md-3 g-4 mt-5 d-flex justify-content-center"
         >
           <!-- House 1 -->
-          <div class="col" style="margin-">
-            <div class="card border-1" style="width: 23rem">
+          <div class="col" style="margin-" v-for="announcement in announcements" :key="announcement.id">
+            <div class= "card border-1" style="width: 23rem">
               <img src="@/assets/house-1.png" class="card-img-top" alt="@." />
               <div class="card-body">
                 <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
+                  <h5 class="card-title">{{ announcement.price }}€/mois</h5>
                   <div class="icon-wrapper">
                     <Heart class="icons" />
                   </div>
                 </div>
-                <h5 class="card-title">Palm Harbor</h5>
+                <h5 class="card-title">{{ announcement.title }}</h5>
 
                 <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 2 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-2.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 3 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-3.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 4 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-4.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 5 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-5.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 6 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-6.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 7 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-7.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 8 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-8.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
-                </p>
-
-                <hr />
-                <div class="row icons-text">
-                  <div class="col">
-                    <p><BedDouble class="icons" /> 3 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Bath class="icons" /> 2 beds</p>
-                  </div>
-
-                  <div class="col">
-                    <p><Diamond class="icons" /> 5x7m2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- House 9 -->
-          <div class="col">
-            <div class="card border-1" style="width: 23rem">
-              <img src="@/assets/house-9.png" class="card-img-top" alt="@." />
-              <div class="card-body">
-                <div class="first-part-card">
-                  <h5 class="card-title">$2,095 /month</h5>
-                  <div class="icon-wrapper">
-                    <Heart class="icons" />
-                  </div>
-                </div>
-                <h5 class="card-title">Palm Harbor</h5>
-
-                <p class="card-text" style="color: #a2a2a2">
-                  2699 Green Valley, Highland Lake, FL
+                  {{announcement.description}}
                 </p>
 
                 <hr />
@@ -500,10 +251,3 @@ h5 {
   padding-right: 0;
 }
 </style>
-
-<script setup>
-import { BedDouble } from "lucide-vue-next";
-import { Bath } from "lucide-vue-next";
-import { Diamond } from "lucide-vue-next";
-import { Heart } from "lucide-vue-next";
-</script>
