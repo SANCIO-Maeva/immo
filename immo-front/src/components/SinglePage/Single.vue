@@ -1,62 +1,59 @@
+<script setup>
+import Nav from "../Nav.vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from 'vue-router';  
+
+const route = useRoute();  
+const AnnoncesId = route.params.id;
+console.log(AnnoncesId);  // Vérifier la valeur du paramètre id
+const announcement = ref({});  
+
+onMounted(async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/v1/announcements/${AnnoncesId}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    announcement.value = await response.json();  // Stocke les données de l'annonce
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'annonce:", error);
+  }
+});
+</script>
+
 <template>
+  <Nav/>
   <div id="app">
     <!-- Property Details Section -->
     <section class="property-details">
       <div class="property-header">
-        <h1>Modern House</h1>
-        <p>3002 Foster Ave, Brooklyn, NY 11210, USA</p>
-        <div class="price">$450,000 <span>$2,800/sq ft</span></div>
+        <h1>{{ announcement.title || 'Titre de l\'annonce' }}</h1>
+        <p>{{ announcement.address || 'Adresse de l\'annonce' }}</p>
+        <div class="price">${{ announcement.price || '$0' }} <span>{{ announcement.type || 'Type' }}</span></div>
       </div>
       <div class="property-main">
         <img
           class="property-image"
-          src="@/assets/house-2.png"
+          :src="announcement.image || ''"  
           alt="Property Image"
-        />
-        <form class="contact-form">
-          <img
-            src="@/assets/profile-pic.jpg"
-            alt="Kayley Hall"
-            class="agent-photo"
-          />
-          <h3>Kayley Hall</h3>
-          <p>View profile</p>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Phone" />
-          <input type="email" placeholder="Email" />
-          <textarea placeholder="Hello, I am interested in..."></textarea>
-          <button>Learn more</button>
-        </form>
+        >
       </div>
     </section>
 
-    <!-- Description Section -->
-    <div class="card" style="width: 18rem">
-      <div class="card-body">
-        <h5 class="card-title">Détails</h5>
-        <hr />
-        <div class="row">
-          <p><BedDouble style="margin-right: 10px" />4</p>
-          <div class="divider"></div>
-        </div>
-      </div>
-    </div>
+  
+    
 
-    <!-- Features Section -->
-    <section class="features">
-      <h2>Features</h2>
-      <div class="feature-list">
-        <div>Air Conditioning</div>
-        <div>Air Conditioning</div>
-        <div>Air Conditioning</div>
-        <div>Air Conditioning</div>
-      </div>
-    </section>
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Description</h5>
+    <hr>
+    <p class="card-text">{{ announcement.description }}</p>
+  </div>
+</div>
 
     <!-- Similar Listings Section -->
     <section class="similar-listings">
       <h2>Similar Listings</h2>
       <div class="listings">
+        <!-- Similar listings, remplacez les valeurs statiques par des données dynamiques si nécessaire -->
         <div class="listing">
           <img src="@/assets/house-2.png" alt="House 1" />
           <h3>Malto House</h3>
@@ -84,6 +81,12 @@ body {
 #app {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.property-image{
+  background-color: #00272e;
+
+
 }
 
 /* Navbar */
@@ -222,7 +225,3 @@ body {
 }
 </style>
 
-<script setup>
-import { BedDouble } from "lucide-vue-next";
-import { Bath } from "lucide-vue-next";
-</script>

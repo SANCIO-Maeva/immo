@@ -2,13 +2,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import FormView from "../views/FormView.vue";
 import LoginView from "../views/LoginView.vue";
-import SingleOneView from "../views/SingleOneView.vue";
+import Single from "@/components/SinglePage/Single.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/home",
       name: "home",
       component: HomeView,
     },
@@ -26,9 +26,9 @@ const router = createRouter({
     },
 
     {
-      path: "/single",
+      path: "/single/:id",
       name: "single",
-      component: SingleOneView,
+      component: Single,
     },
     // {
     // path: "/about",

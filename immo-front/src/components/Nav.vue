@@ -20,9 +20,11 @@
       <!-- Liens et bouton -->
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
+          <RouterLink to="/home">
           <li class="nav-item">
-            <RouterLink class="nav-link active" aria-current="page" to="/">Home</RouterLink>
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
+        </RouterLink>
           <li class="nav-item">
             <a class="nav-link" href="#">Features</a>
           </li>

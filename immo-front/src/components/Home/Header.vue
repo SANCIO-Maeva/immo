@@ -1,50 +1,15 @@
+<script setup>
+import Nav from "../Nav.vue";
+</script>
 <template>
   <div class="hero">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <!-- Logo à gauche -->
-        <a class="navbar-brand" href="#">Logo Ipsum</a>
-
-        <!-- Bouton pour la navigation mobile -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Liens et bouton -->
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <RouterLink class="nav-link active" aria-current="page" to="/">Home</RouterLink>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-          </ul>
-          <RouterLink to="/form">Ajouter une annonce<i class="bi bi-arrow-right"></i></RouterLink>
-        </div>
-      </div>
-    </nav>
-
+  <Nav/>
     <!-- Texte principal -->
     <div class="hero-text">
       <h1>
-        Beautiful <br />
-        homes made <br />
-        for you
+        Magnifique <br />
+        maisons faites <br />
+        pour vous.
       </h1>
       <p>
         In oculis quidem se esse admonere interesse <br />
@@ -111,4 +76,3 @@ button {
 }
 </style>
 
-<script setup></script>

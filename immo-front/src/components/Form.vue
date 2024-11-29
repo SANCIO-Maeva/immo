@@ -1,3 +1,97 @@
+<script setup>
+import { reactive, ref } from "vue";
+import { useRouter } from 'vue-router';
+import axios from "axios"; 
+
+const router = useRouter();
+
+const currentStep = ref(1);
+
+const form = reactive({
+  title: "",
+  description: "",
+  type: "",
+  address: "",
+  price: "",
+  state: "", // Ajout de la propriété
+  createdAt: "",
+  updatedAt: "",
+  id_employee: 1,
+});
+
+
+// const createForm =async () => { 
+
+//   let data = await create(
+//     annoucements.value.title,
+//     annoucements.value.description,
+//     annoucements.value.type,
+//     annoucements.value.adress,
+//     annoucements.value.state,
+//     annoucements.value.updatedAt,
+//     annoucements.value.createdAt,
+
+//   );
+//   announcements.value = data;
+//   const AnnoncesId = data.id;
+//   console.log(AnnoncesId)
+//   router.push({ name: 'home', params: { id: AnnoncesId } });
+// }
+
+// Fonction pour envoyer les données du formulaire à l'API
+const createForm = async () => {
+  try {
+    // Utilisation de la méthode POST d'Axios pour envoyer les données à l'API
+    const response = await axios.post("http://localhost:3000/v1/announcements", {
+      title: form.title,
+      description: form.description,
+      type: form.type,
+      address: form.address,
+      price: form.price,
+      state: form.state,
+      createdAt: form.createdAt,
+      updatedAt: form.updatedAt,
+      employeeId: form.id_employee // Ajouter ici l'employeeId
+    });
+
+    const data = response.data; // Les données renvoyées par l'API
+    const annonceId = data.id;
+    console.log("Annonce créée avec l'ID:", annonceId);
+    // Redirection vers la page de l'annonce après la création
+    router.push({ name: "home", params: { id: annonceId } });
+  } catch (error) {
+    console.error("Erreur lors de la création de l'annonce:", error);
+  }
+};
+
+
+function nextStep() {
+  if (currentStep.value < 2) {
+    currentStep.value++;
+  }
+}
+
+function prevStep() {
+  if (currentStep.value > 1) {
+    currentStep.value--;
+  }
+}
+
+// function handleSubmit() {
+//   console.log("Form submitted:", { ...form });
+// }
+
+function getProgress(step) {
+  const steps = {
+    1: [form.title, form.description, form.type, form.address],
+    2: [form.price, form.state, form.createdAt, form.updatedAt],
+  };
+
+  const fields = steps[step] || [];
+  const filledFields = fields.filter((field) => field?.trim?.() !== "").length;
+  return (filledFields / fields.length) * 100;
+}
+</script>
 <template>
   <hr style="width: 70rem; margin-left: 10%" />
   <!-- Text -->
@@ -29,7 +123,7 @@
     </div>
     <h4>Ajouter une annonce</h4>
     <p>Remplir le formulaire ci-dessous</p>
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="createForm">
       <div v-if="currentStep === 1">
         <!-- Title and description -->
         <div class="row">
@@ -143,14 +237,13 @@
         </div>
 
         <div class="d-flex justify-content-between">
-          <button type="button" @click="prevStep">Précédent</button>
+          <button type="button">Précédent</button>
           <button type="submit">Soumettre</button>
         </div>
       </div>
     </form>
   </div>
 </template>
-
 <style scoped>
 .input-with-icon {
   position: relative;
@@ -303,47 +396,3 @@ hr {
 }
 </style>
 
-<script setup>
-import { reactive, ref } from "vue";
-import { useRouter } from 'vue-router';
-
-
-const currentStep = ref(1);
-
-const form = reactive({
-  title: "",
-  description: "",
-  type: "",
-  address: "",
-  price: "",
-  creationDate: "",
-  updateDate: "",
-});
-
-function nextStep() {
-  if (currentStep.value < 2) {
-    currentStep.value++;
-  }
-}
-
-function prevStep() {
-  if (currentStep.value > 1) {
-    currentStep.value--;
-  }
-}
-
-function handleSubmit() {
-  console.log("Form submitted:", { ...form });
-}
-
-function getProgress(step) {
-  const steps = {
-    1: [form.title, form.description, form.type, form.address],
-    2: [form.price, form.status, form.creationDate, form.updateDate],
-  };
-
-  const fields = steps[step] || [];
-  const filledFields = fields.filter((field) => field.trim() !== "").length;
-  return (filledFields / fields.length) * 100;
-}
-</script>

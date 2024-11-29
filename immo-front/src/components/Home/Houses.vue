@@ -21,7 +21,7 @@ const fetchAnnonces = async () => {
 };
 
 const redirection = async (AnnoncesId) => {
-    router.push({ name: 'about', params: { id: AnnoncesId } });
+    router.push({ name: 'single', params: { id: AnnoncesId } });
 }
 
 onMounted(() => {
@@ -34,7 +34,7 @@ onMounted(() => {
     <section class="container mt-5 mx-auto bg-custom">
       <!-- Filter -->
       <!-- <hr style="width: 35rem" /> -->
-      <h1>Find your next place to live</h1>
+      <h1>Trouvez votre prochaine demeure</h1>
 
       <div class="container filter mt-3">
         <div class="row">
@@ -47,7 +47,7 @@ onMounted(() => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Looking for
+                Recherche 
               </button>
               <ul class="dropdown-menu" aria-labelledby="lookingForDropdown">
                 <li><a class="dropdown-item" href="#">Buy</a></li>
@@ -65,7 +65,7 @@ onMounted(() => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Location
+                Localisation
               </button>
               <ul class="dropdown-menu" aria-labelledby="locationDropdown">
                 <li><a class="dropdown-item" href="#">New York</a></li>
@@ -84,7 +84,7 @@ onMounted(() => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Property Type
+                Type de propriété
               </button>
               <ul class="dropdown-menu" aria-labelledby="propertyTypeDropdown">
                 <li><a class="dropdown-item" href="#">Apartment</a></li>
@@ -103,7 +103,7 @@ onMounted(() => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Price
+                Prix
               </button>
               <ul class="dropdown-menu" aria-labelledby="priceDropdown">
                 <li>
@@ -135,12 +135,12 @@ onMounted(() => {
       </div>
 
       <!-- Cards houses -->
-      <div class="container-fluid">
+      <div class="container-fluid" >
         <div
           class="row row-cols-1 row-cols-md-3 g-4 mt-5 d-flex justify-content-center"
         >
           <!-- House 1 -->
-          <div class="col" style="margin-" v-for="announcement in announcements" :key="announcement.id">
+          <div class="col" v-for="announcement in announcements" :key="announcement.id" @click="redirection(announcement.id_announcement)">
             <div class= "card border-1" >
               <img src="@/assets/house-1.png" class="card-img-top" alt="@." />
               <div class="card-body">
@@ -152,8 +152,8 @@ onMounted(() => {
                 </div>
                 <h5 class="card-title">{{ announcement.title }}</h5>
 
-                <p class="card-text" style="color: #a2a2a2">
-                  {{announcement.description}}
+                <p class="card-text" style="color: #a2a2a2;">
+                {{announcement.description}}
                 </p>
 
                 <hr />
